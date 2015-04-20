@@ -1,0 +1,102 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', 'node-async' ]
+2 info using npm@1.3.17
+3 info using node@v0.10.23
+4 verbose node symlink /usr/bin/node
+5 warn package.json url@0.7.9 url is also the name of a node core module.
+6 verbose cache add [ 'node-async', null ]
+7 verbose cache add name=undefined spec="node-async" args=["node-async",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: 'node-async',
+8 verbose parsed url   path: 'node-async',
+8 verbose parsed url   href: 'node-async' }
+9 silly lockFile 6f50e6eb-node-async node-async
+10 verbose lock node-async /home/shishir/.npm/6f50e6eb-node-async.lock
+11 silly lockFile 6f50e6eb-node-async node-async
+12 silly lockFile 6f50e6eb-node-async node-async
+13 verbose addNamed [ 'node-async', '' ]
+14 verbose addNamed [ null, '*' ]
+15 silly lockFile 574fea64-node-async node-async@
+16 verbose lock node-async@ /home/shishir/.npm/574fea64-node-async.lock
+17 silly addNameRange { name: 'node-async', range: '*', hasData: false }
+18 verbose url raw node-async
+19 verbose url resolving [ 'https://registry.npmjs.org/', './node-async' ]
+20 verbose url resolved https://registry.npmjs.org/node-async
+21 info trying registry request attempt 1 at 00:37:23
+22 verbose etag "6JLX39Z78TR7QAUD4A0M56Y8B"
+23 http GET https://registry.npmjs.org/node-async
+24 http 304 https://registry.npmjs.org/node-async
+25 silly registry.get cb [ 304,
+25 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R15B03)',
+25 silly registry.get     etag: '"6JLX39Z78TR7QAUD4A0M56Y8B"',
+25 silly registry.get     date: 'Tue, 17 Dec 2013 05:37:28 GMT',
+25 silly registry.get     'content-length': '0' } ]
+26 verbose etag node-async from cache
+27 silly addNameRange number 2 { name: 'node-async', range: '*', hasData: true }
+28 silly addNameRange versions [ 'node-async', [ '0.0.1' ] ]
+29 verbose addNamed [ 'node-async', '0.0.1' ]
+30 verbose addNamed [ '0.0.1', '0.0.1' ]
+31 silly lockFile 6b836be5-node-async-0-0-1 node-async@0.0.1
+32 verbose lock node-async@0.0.1 /home/shishir/.npm/6b836be5-node-async-0-0-1.lock
+33 silly lockFile 6b836be5-node-async-0-0-1 node-async@0.0.1
+34 silly lockFile 6b836be5-node-async-0-0-1 node-async@0.0.1
+35 silly lockFile 574fea64-node-async node-async@
+36 silly lockFile 574fea64-node-async node-async@
+37 silly resolved [ { author:
+37 silly resolved      { name: 'Johann du Toit',
+37 silly resolved        email: 'exxonno@gmail.com',
+37 silly resolved        url: 'http://www.johanndutoit.net' },
+37 silly resolved     name: 'node-async',
+37 silly resolved     description: 'Easy asynchronous programming with easy to handle results.',
+37 silly resolved     version: '0.0.1',
+37 silly resolved     homepage: 'https://github.com/Johanndutoit/node-async',
+37 silly resolved     repository:
+37 silly resolved      { type: 'git',
+37 silly resolved        url: 'git://github.com/Johanndutoit/node-async.git' },
+37 silly resolved     main: 'index.js',
+37 silly resolved     dependencies: { 'coffee-script': '>= 1.3.3', narrow: '>= 0.0.2' },
+37 silly resolved     devDependencies: {},
+37 silly resolved     optionalDependencies: {},
+37 silly resolved     engines: { node: '*' },
+37 silly resolved     readme: '\n# Node-Async\n\nNeeded a library that would allow me to do a series of functions and wait for the result where I could then parse and move on with all the data.\n\nSo the idea is:\n* Create a Array of functions I want executed.\n* Wait for them execute\n* Handle Results from the functions when they have been executed.\n\nBased of https://github.com/CurriculumVitae/CV-Data-Service-Client/ that I wrote to help me with http-signature requests to the server.\n\n## Installation\n \n    $ npm install node-async\n\n## Quick Start\n\n```js\nvar async_block = require(\'node-async\');\n\nasync_block(\n\t[\n\t\t{\n\t\t\tname: \'get_twitter_feed\',\n\t\t\ttask: function(params, callback) {\n\t\t\t\t// Do http request etc.\n\t\t\t\tcallback null, data_from_twitter\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\tname: \'get_facebook_feed\',\n\t\t\ttask: function(params, callback) {\n\t\t\t\t// Do http request etc.\n\t\t\t\tcallback null, data_from_facebook\n\t\t\t}\n\t\t},\n\t\t{\n\t\t\tname: \'perform_some_calculation\',\n\t\t\ttask: function(params, callback) {\n\t\t\t\t// Do http request etc.\n\t\t\t\tcallback \'Error while performing Calculation\'\n\t\t\t}\n\t\t}\n\t],\n\tfunction(results) {\n\n\t\tif(results.get_twitter_feed.result == true) {\n\t\t\tconsole.log("From Twitter: " + results.get_twitter_feed.value);\n\t\t} else {\n\t\t\t// handle error\n\t\t\tconsole.log("Error: " + results.get_twitter_feed.error)\n\t\t}\n\n\t\tif(results.get_facebook_feed.result == true) {\n\t\t\tconsole.log("From Facebook: " + results.get_facebook_feed.value);\n\t\t} else {\n\t\t\t// handle error\n\t\t\tconsole.log("Error: " + results.get_facebook_feed.error)\n\t\t}\n\n\t\tif(results.perform_some_calculation.result == true) {\n\t\t\t// Do something nice\n\t\t} else {\n\t\t\t// Handle Error\n\t\t\tconsole.log("Error: " + results.perform_some_calculation.error)\n\t\t}\n\n\t}\n);\n```\n\nWill Produce:\n\n\tFrom Twitter: {some data you got}\n\tFrom Facebook: {some data you got}\n\tError: {The error we received.}\n\n## TODO:\n\n* Add some kind of timeout for the functions\n* Create a Suite of Tests\n* Add some more real world samples\n\n## License \n\n(The MIT License)\n\nCopyright (c) 2009-2012\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\'Software\'), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \'AS IS\', WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.',
+37 silly resolved     readmeFilename: 'README.md',
+37 silly resolved     bugs: { url: 'https://github.com/Johanndutoit/node-async/issues' },
+37 silly resolved     _id: 'node-async@0.0.1',
+37 silly resolved     _from: 'node-async@' } ]
+38 info install node-async@0.0.1 into /home/shishir
+39 info installOne node-async@0.0.1
+40 info /home/shishir/node_modules/node-async unbuild
+41 info preuninstall node-async@0.0.1
+42 info uninstall node-async@0.0.1
+43 verbose true,/home/shishir/node_modules,/home/shishir/node_modules unbuild node-async@0.0.1
+44 info postuninstall node-async@0.0.1
+45 info /home/shishir/node_modules/node-async unbuild
+46 error error rolling back Error: EACCES, unlink '/home/shishir/node_modules/node-async/node_modules/.bin/cake'
+46 error error rolling back  node-async@0.0.1 { [Error: EACCES, unlink '/home/shishir/node_modules/node-async/node_modules/.bin/cake']
+46 error error rolling back   errno: 3,
+46 error error rolling back   code: 'EACCES',
+46 error error rolling back   path: '/home/shishir/node_modules/node-async/node_modules/.bin/cake' }
+47 error Error: EACCES, unlink '/home/shishir/node_modules/node-async/node_modules/.bin/cake'
+47 error  { [Error: EACCES, unlink '/home/shishir/node_modules/node-async/node_modules/.bin/cake']
+47 error   errno: 3,
+47 error   code: 'EACCES',
+47 error   path: '/home/shishir/node_modules/node-async/node_modules/.bin/cake' }
+48 error Please try running this command again as root/Administrator.
+49 error System Linux 3.11.0-14-generic
+50 error command "/usr/bin/node" "/usr/bin/npm" "install" "node-async"
+51 error cwd /home/shishir/work/nodejs/NodeSchoolSamples/functionaljavascriptworkshop/async_loops
+52 error node -v v0.10.23
+53 error npm -v 1.3.17
+54 error path /home/shishir/node_modules/node-async/node_modules/.bin/cake
+55 error code EACCES
+56 error errno 3
+57 error stack Error: EACCES, unlink '/home/shishir/node_modules/node-async/node_modules/.bin/cake'
+58 verbose exit [ 3, true ]
