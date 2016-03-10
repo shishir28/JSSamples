@@ -1,4 +1,1 @@
-NodeEasyAppBuilder
-=========
-
-This is port of Easy Appbuilder. This tool generates application which uses AngularJS + HTML 5 + CSS on Client side . On Server side it uses NodeJS, ExpressJS and MySQL/MongoDB.
+Sample API gateway service. It works as registry of all micro serviecs in system and  also works like security gateway.
