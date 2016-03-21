@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var expressSession = require('express-session');
 
 // ---------------------
 var expressSession = require('express-session');
@@ -14,6 +16,13 @@ var mongoose = require('mongoose');
 mongoose.connect(dbConfig.url);
 var app = express();
 
+// Configuring Passport
+app.use(expressSession({
+    secret: 'mySecretKey',
+    saveUninitialized: true, // (default: true)
+    resave: true, // (default: true)
+}));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -22,12 +31,22 @@ app.use(bodyParser.urlencoded({
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Initialize Passport
+var initPassport = require('./passport/init');
+initPassport(passport);
+
+// Get all routes reference 
 var registry_routes = require('./routes/registry.js');
 var routing_routes = require('./routes/routing.js');
-
+var auth_routes = require('./routes/auth')(passport);
+// Specify the routes here.
 app.use('/', registry_routes);
 app.use('/', routing_routes);
-
+app.use('/', auth_routes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
