@@ -23,7 +23,11 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 var registry_routes = require('./routes/registry.js');
+var routing_routes = require('./routes/routing.js');
+
 app.use('/', registry_routes);
+app.use('/', routing_routes);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
