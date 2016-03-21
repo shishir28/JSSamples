@@ -28,16 +28,11 @@ router.delete('/apps/:appName', function (req, res) {
             res.status(204).send({
                 status: 204
             });
-            //            res.status(200).send({
-            //                status: 200,
-            //                message: req.params.appName + ' removed'
-            //            });
         }
     });
 });
 
 router.post('/apps', function (req, res) {
-    console.log(req.body);
     var serviceObject = req.body;
 
     if (!serviceObject.appName || !serviceObject.hostName || !serviceObject.port || !serviceObject.service || !serviceObject.method) {
@@ -74,7 +69,7 @@ router.post('/apps', function (req, res) {
                             message: err.message
                         });
                     } else {
-                        console.log("Service " + localService.appName + " Registered at: http://" + localService.hostName + ":" + localService.port + localService.service + " with " + localService.method + " method");
+                        //console.log("Service " + localService.appName + " Registered at: http://" + localService.hostName + ":" + localService.port + localService.service + " with " + localService.method + " method");
                         res.status(200).send({
                             status: 200,
                             message: 'Service registered successfully!'
@@ -85,10 +80,9 @@ router.post('/apps', function (req, res) {
         });
 });
 
-
-roruter.all("/service/:serviceName*", function (req, res) {
+router.all("/apps/:appName*", function (req, res) {
     svc.find({
-        "appName": req.params.serviceName
+        "appName": req.params.appName
     }, function (err, doc) {
         if (doc.length === 0) {
             res.status(400).send({
@@ -96,18 +90,21 @@ roruter.all("/service/:serviceName*", function (req, res) {
                 message: 'Bad request!'
             });
         } else {
-            if (doc[0].method.toUpperCase().trim() == req.originalMethod.toUpperCase().trim()) {
-                var targetURL = 'http://' + doc[0].hostName + (doc[0].port ? : doc[0].port: "") + doc[0].service + req.params[0];
-                requestify.request(url, {
-                    method: req.originalMethod,
+
+            if (doc[0].method.toUpperCase().trim() == req.method.toUpperCase().trim()) {
+                var targetURL = 'http://' + doc[0].hostName.trim() + (doc[0].port ? ":" + doc[0].port.trim() : "") + "/" + doc[0].service;
+                if (req.params[0]) {
+                    targetURL = targetURL + '/' + req.params[0];
+                }
+                requestify.request(targetURL, {
+                    method: req.method,
                     body: req.body,
                     headers: {
                         'Content-Type': 'application/json'
                     }
-                }).then(function (success) {
+                }).then(function (response) {
                     res.send(response.getBody());
                 });
-
             } else {
                 res.status(400).send({
                     status: 400,
