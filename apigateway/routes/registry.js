@@ -1,5 +1,6 @@
 var svc = require('../models/MongoDB/service');
 var express = require('express');
+var requestify = require('requestify');
 var router = express.Router();
 router.get('/apps', function (req, res) {
     var projection = {
@@ -84,4 +85,36 @@ router.post('/apps', function (req, res) {
         });
 });
 
+
+roruter.all("/service/:serviceName*", function (req, res) {
+    svc.find({
+        "appName": req.params.serviceName
+    }, function (err, doc) {
+        if (doc.length === 0) {
+            res.status(400).send({
+                status: 400,
+                message: 'Bad request!'
+            });
+        } else {
+            if (doc[0].method.toUpperCase().trim() == req.originalMethod.toUpperCase().trim()) {
+                var targetURL = 'http://' + doc[0].hostName + (doc[0].port ? : doc[0].port: "") + doc[0].service + req.params[0];
+                requestify.request(url, {
+                    method: req.originalMethod,
+                    body: req.body,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function (success) {
+                    res.send(response.getBody());
+                });
+
+            } else {
+                res.status(400).send({
+                    status: 400,
+                    message: 'Bad request!'
+                });
+            }
+        }
+    });
+});
 module.exports = router;
