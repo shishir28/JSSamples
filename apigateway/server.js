@@ -46,9 +46,10 @@ var admin_routes = require('./routes/admin.js');
 var auth_routes = require('./routes/auth')(passport);
 
 // Specify the routes here.
-app.use('/', admin_routes);
+
 app.use('/', registry_routes);
 app.use('/', routing_routes);
+app.use('/', admin_routes);
 app.use('/', auth_routes);
 
 // catch 404 and forward to error handler

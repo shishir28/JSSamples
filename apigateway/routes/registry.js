@@ -54,7 +54,7 @@ router.post('/apps', function (req, res) {
                     message: 'Bad request!'
                 });
             }
-            if (svcObject) {
+            if (svcObject ) {
                 res.status(400).send({
                     status: 400,
                     message: 'Service already exist!'

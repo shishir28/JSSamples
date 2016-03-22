@@ -4,6 +4,7 @@ var RoleSchema = require('./role');
 
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
+
 var ServiceSchema = new Schema({
     id: ObjectId,
     appName: String,
