@@ -3,7 +3,6 @@ var router = express.Router();
 var User = require('../models/MongoDB/user');
 var tokenHelper = require('../Security/tokenHelper');
 
-
 module.exports = function (passport) {
     router.post('/account/register', function (req, res, done) {
         passport.authenticate('signup', function (err, user, info) {
@@ -30,7 +29,6 @@ module.exports = function (passport) {
                     status: 401,
                     message: info
                 });
-
             } else {
                 res.send({
                     status: 200,
@@ -38,7 +36,6 @@ module.exports = function (passport) {
                     token: tokenHelper.generateToken(user)
                 });
             }
-
         })(req, req.body.username, req.body.password, done);
     });
     return router;

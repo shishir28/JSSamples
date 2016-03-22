@@ -42,8 +42,11 @@ initPassport(passport);
 // Get all routes reference 
 var registry_routes = require('./routes/registry.js');
 var routing_routes = require('./routes/routing.js');
+var admin_routes = require('./routes/admin.js');
 var auth_routes = require('./routes/auth')(passport);
+
 // Specify the routes here.
+app.use('/', admin_routes);
 app.use('/', registry_routes);
 app.use('/', routing_routes);
 app.use('/', auth_routes);

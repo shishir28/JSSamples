@@ -1,9 +1,19 @@
 var mongoose = require('mongoose');
+var RoleSchema = require('./role');
 
-module.exports = mongoose.model('User', {
+var Schema = mongoose.Schema,
+    ObjectId = Schema.ObjectId;
+var UserSchema = new Schema({
+    id: ObjectId,
     username: String,
     password: String,
     email: String,
     gender: String,
-    address: String
+    address: String,
+    roleId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Role'
+    }
 });
+
+module.exports = mongoose.model('User', UserSchema);
