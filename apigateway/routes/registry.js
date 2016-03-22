@@ -1,4 +1,7 @@
-var svc = require('../models/MongoDB/service');
+var svc = require('../models/MongoDB/service').Service;
+var svcRole = require('../models/MongoDB/service').ServiceRole;
+var Role = require('../models/MongoDB/role');
+
 var express = require('express');
 var router = express.Router();
 
@@ -57,23 +60,50 @@ router.post('/apps', function (req, res) {
                     message: 'Service already exist!'
                 });
             } else {
-                var localService = new svc();
-                localService.appName = serviceObject.appName;
-                localService.hostName = serviceObject.hostName;
-                localService.port = serviceObject.port;
-                localService.service = serviceObject.service;
-                localService.method = serviceObject.method;
-                localService.save(function (err) {
+                Role.findOne({
+                    'rolename': req.body.rolename
+                }, function (err, role) {
+                    // In case of any error, return using the done method
                     if (err) {
-                        res.status(500).send({
-                            status: 500,
-                            message: err.message
-                        });
+                        console.log('Error in SignUp: ' + err);
+                        return done(err);
+                    }
+                    // role does not  exists
+                    if (!role) {
+                        return done(null, false, 'Invalid role name!');
                     } else {
-                        //console.log("Service " + localService.appName + " Registered at: http://" + localService.hostName + ":" + localService.port + localService.service + " with " + localService.method + " method");
-                        res.status(200).send({
-                            status: 200,
-                            message: 'Service registered successfully!'
+                        var localService = new svc();
+                        localService.appName = serviceObject.appName;
+                        localService.hostName = serviceObject.hostName;
+                        localService.port = serviceObject.port;
+                        localService.service = serviceObject.service;
+                        localService.method = serviceObject.method;
+                        localService.save(function (err) {
+                            if (err) {
+                                res.status(500).send({
+                                    status: 500,
+                                    message: err.message
+                                });
+                            } else {
+
+                                var localServiceRole = new svcRole();
+                                localServiceRole.serviceId = localService;
+                                localServiceRole.roleId = role;
+                                localServiceRole.save(function (err) {
+                                    if (err) {
+                                        res.status(500).send({
+                                            status: 500,
+                                            message: err.message
+                                        });
+                                    } else {
+
+                                        res.status(200).send({
+                                            status: 200,
+                                            message: 'Service registered successfully!'
+                                        });
+                                    }
+                                });
+                            }
                         });
                     }
                 });
