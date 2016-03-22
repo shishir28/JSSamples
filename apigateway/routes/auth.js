@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var jwt = require('jwt-simple');
 var User = require('../models/MongoDB/user');
+var tokenHelper = require('../Security/tokenHelper');
+
 
 module.exports = function (passport) {
     router.post('/account/register', function (req, res, done) {
@@ -31,12 +32,10 @@ module.exports = function (passport) {
                 });
 
             } else {
-                var tokenSecret = 'infinitexxx';
-                var generatedToken = jwt.encode(user, tokenSecret);
                 res.send({
                     status: 200,
                     message: 'Login Successful!',
-                    token: generatedToken
+                    token: tokenHelper.generateToken(user)
                 });
             }
 
