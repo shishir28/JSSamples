@@ -5,32 +5,27 @@ var bCrypt = require('bcrypt-nodejs');
 module.exports = function (passport) {
 
     passport.use('login', new LocalStrategy({
-            passReqToCallback: true
-        },
+        passReqToCallback: true
+    },
         function (req, username, password, done) {
             // check in mongo if a user with username exists or not
             //console.log(' username ' + username);
 
             User.findOne({
-                    'username': username
-                },
+                'username': username
+            },
                 function (err, user) {
                     // In case of any error, return using the done method
-
                     if (err)
                         return done(err);
-                    // Username does not exist, log the error and redirect back
+                    // Username does not exist
                     if (!user) {
-                        console.log('User Not Found with username ' + username);
-                        return done(null, false, req.flash('message', 'User Not found.'));
+                        return done(null, false, 'User Not Found!');
                     }
-                    // User exists but wrong password, log the error 
                     if (!isValidPassword(user, password)) {
-                        console.log('Invalid Password');
-                        return done(null, false, req.flash('message', 'Invalid Password')); // redirect back to login page
+                        return done(null, false, 'Invalid password!');
                     }
-                    // User and password both match, return user from done method
-                    // which will be treated like success
+                    // User and password both match, return user from done method  which will be treated like success
                     return done(null, user);
                 }
             );
