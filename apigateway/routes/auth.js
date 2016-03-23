@@ -28,10 +28,21 @@ module.exports = function (passport) {
                     message: info
                 });
             } else {
+                var userInfo = {
+                    id: user.id,
+                    username: user.username,
+                    password: user.password,
+                    email: user.email,
+                    gender: user.gender,
+                    address: user.address,
+                    roleId: user.roleId,
+                }
+                var gtoken = tokenHelper.generateToken(userInfo);
                 res.send({
                     status: 200,
                     message: 'Login Successful!',
-                    token: tokenHelper.generateToken(user)
+                    token: gtoken
+                    
                 });
             }
         })(req, req.body.username, req.body.password, done);

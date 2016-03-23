@@ -1,12 +1,12 @@
 ﻿var svc = require('../models/MongoDB/service').Service;
 var svcRole = require('../models/MongoDB/service').ServiceRole;
-
 var express = require('express');
 var requestify = require('requestify');
 var tokenHelper = require('../Security/tokenHelper');
 var Role = require('../models/MongoDB/role');
-
 var router = express.Router();
+//------------------
+var jwt = require('jsonwebtoken');
 
 // Module to facilitate routing
 
@@ -20,23 +20,36 @@ router.all("/apps/:appName*", function (req, res) {
                 message: 'Bad request!'
             });
         } else {
+            var authToken = req.body.token || req.query.token || req.headers['x-access-token'];
+            //if ((!authToken) || (!tokenHelper.decodeToken(authToken))) {
+            if (!authToken) {
 
-            var authToken = req.headers['authtoken'];
-            if ((!authToken) || (!tokenHelper.decodeToken(authToken))) {
                 res.status(401).send({
                     status: 401,
                     message: 'Unauthorized!'
                 });
             }
+            var userObject1 = jwt.decode(authToken, { complete: true });
+            console.log(userObject1);
+            //jwt.verify(authToken, 'mySecretKey', function (err, decoded) {
+               
+            //    if (err) {
+            //        console.log('ERROR-----------------------');
+            //        console.log(err);
+            //        return res.json({ success: false, message: 'Failed to authenticate token.' });
+            //    } else {
+            //        console.log('DECODED-----------------------');
+            //        console.log(decoded);
+            //        return decoded;
+            //    }
+            //});
 
             if (serviceObject[0].method.toUpperCase().trim() == req.method.toUpperCase().trim()) {
                 var userObject = tokenHelper.decodeToken(authToken);
-                svcRole.find({
-                    "roleId": userObject.roleId
-                }, function (err, serviceRoleObject) {
+                console.log(userObject);
+                svcRole.findById(userObject.roleId, function (err, serviceRoleObject) {
                     console.log(serviceRoleObject);
                     console.log(serviceObject);
-
                     console.log(serviceRoleObject.serviceId === serviceObject._id);
                     if (serviceRoleObject.serviceId === serviceObject._id) {
                         var targetURL = 'http://' + serviceObject[0].hostName.trim() + (serviceObject[0].port ? ":" + serviceObject[0].port.trim() : "") + "/" + serviceObject[0].service;

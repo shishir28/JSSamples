@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var expressSession = require('express-session');
+var jwt = require('jsonwebtoken');
+
 
 // ---------------------
 var expressSession = require('express-session');
@@ -15,6 +17,7 @@ var dbConfig = require('./db.js');
 var mongoose = require('mongoose');
 mongoose.connect(dbConfig.url);
 var app = express();
+app.set('superSecret', 'mySecretKey');
 
 // Configuring Passport
 app.use(expressSession({
@@ -29,6 +32,12 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+    next();
+});
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
