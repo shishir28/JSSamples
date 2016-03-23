@@ -17,8 +17,6 @@ module.exports = function (passport) {
     // Authenticate a user.
     router.post('/account/login', function (req, res, done) {
         passport.authenticate('login', function (err, user, info) {
-            //res.json(401, { error: 'message' })
-            var msg = err ? err : (info ? info : 'Login Successful!');
             if (err) {
                 res.send({
                     status: 500,

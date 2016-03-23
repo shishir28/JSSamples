@@ -14,8 +14,7 @@ router.all("/apps/:appName*", function (req, res) {
     svc.find({
         "appName": req.params.appName
     }, function (err, serviceObject) {
-        console.log(serviceObject.length);
-        if (!serviceObject) {
+        if (serviceObject.length === 0) {
             res.status(400).send({
                 status: 400,
                 message: 'Bad request!'
