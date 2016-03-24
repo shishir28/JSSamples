@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var http = require('http');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -8,20 +9,16 @@ var passport = require('passport');
 var expressSession = require('express-session');
 var jwt = require('jsonwebtoken');
 
-
 // ---------------------
-var expressSession = require('express-session');
-var passport = require('passport');
-var http = require('http');
-var dbConfig = require('./db.js');
+var config = require('./config.js');
 var mongoose = require('mongoose');
-mongoose.connect(dbConfig.url);
+mongoose.connect(config.database);
 var app = express();
-app.set('superSecret', 'mySecretKey');
+app.set('superSecret', config.secret);
 
 // Configuring Passport
 app.use(expressSession({
-    secret: 'mySecretKey',
+    secret: app.get('superSecret'),
     saveUninitialized: true, // (default: true)
     resave: true, // (default: true)
 }));
@@ -32,15 +29,7 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
-    next();
-});
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -50,10 +39,9 @@ initPassport(passport);
 
 // Get all routes reference 
 var registry_routes = require('./routes/registry.js');
-var routing_routes = require('./routes/routing.js');
+var routing_routes = require('./routes/routing.js')(app);
 var admin_routes = require('./routes/admin.js');
-
-var auth_routes = require('./routes/auth')(passport);
+var auth_routes = require('./routes/auth')(passport, app);
 
 // Specify the routes here.
 
@@ -92,6 +80,5 @@ app.use(function (err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;

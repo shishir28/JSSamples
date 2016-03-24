@@ -3,7 +3,7 @@ var router = express.Router();
 var User = require('../models/MongoDB/user');
 var tokenHelper = require('../Security/tokenHelper');
 
-module.exports = function (passport) {
+module.exports = function (passport, app) {
     router.post('/account/register', function (req, res, done) {
         passport.authenticate('signup', function (err, user, info) {
             var msg = err ? err : (info ? info : 'Registration Successful!');
@@ -13,7 +13,6 @@ module.exports = function (passport) {
             });
         })(req, req.body.username, req.body.password, done);
     });
-
     // Authenticate a user.
     router.post('/account/login', function (req, res, done) {
         passport.authenticate('login', function (err, user, info) {
@@ -37,7 +36,7 @@ module.exports = function (passport) {
                     address: user.address,
                     roleId: user.roleId,
                 }
-                var gtoken = tokenHelper.generateToken(userInfo);
+                var gtoken = tokenHelper.generateToken(userInfo, app.get('superSecret'));
                 res.send({
                     status: 200,
                     message: 'Login Successful!',

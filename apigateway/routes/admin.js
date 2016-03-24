@@ -19,7 +19,7 @@ router.get('/roles', function (req, res) {
 });
 
 router.delete('/roles/:rolename', function (req, res) {
-    console.log(req.params.rolename);
+    //console.log(req.params.rolename);
     roleRepo.remove({
         rolename: req.params.rolename
     }, function (err) {
