@@ -3,7 +3,7 @@
 module.exports = {
     generateToken: function (user, secretkey) {
         var token = jwt.sign(user, secretkey, {
-            expiresIn: "1h" // expires in 24 hours
+            expiresIn: "24h" // expires in 24 hours
         });
         return token;
     },

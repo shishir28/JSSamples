@@ -41,10 +41,12 @@ module.exports = function (passport, app) {
                     status: 200,
                     message: 'Login Successful!',
                     token: gtoken
-                    
+
                 });
             }
         })(req, req.body.username, req.body.password, done);
     });
+
+
     return router;
 };

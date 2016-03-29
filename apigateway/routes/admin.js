@@ -4,7 +4,6 @@ var roleRepo = require('../models/MongoDB/role');
 var svc = require('../models/MongoDB/service').Service;
 var svcRole = require('../models/MongoDB/service').ServiceRole;
 
-
 router.get('/roles', function (req, res) {
     var projection = {
         __v: false,
@@ -77,7 +76,6 @@ router.post('/roles', function (req, res) {
             }
         });
 });
-
 
 router.post('/approles', function (req, res) {
     var appRoleObject = req.body;
