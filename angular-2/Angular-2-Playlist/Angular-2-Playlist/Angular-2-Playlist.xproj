@@ -7,7 +7,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>65671d5f-870f-4ebe-9e4d-db19a7e3f593</ProjectGuid>
+    <ProjectGuid>1cc0b4a3-c54e-4c12-baac-0e055a57811a</ProjectGuid>
     <RootNamespace>Angular_2_Playlist</RootNamespace>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
