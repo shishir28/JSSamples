@@ -1,17 +1,38 @@
-<div class="login-page animate">
-    <div class="row">
-        <div class="col-lg-4 col-lg-offset-4">
-            <form role="form">
-                <div class="form-content">
-                    <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Email">
+<div class="container">
+    <main id="content" class="widget-login-container" role="main">
+        <div class="row">
+            <div class="col-xl-4 col-md-6 col-xs-10 offset-xl-4 offset-md-3 offset-xs-1">
+
+                <section class="widget widget-login animated fadeInUp">
+                    <header>
+                        <h3>Login  </h3>
+                    </header>
+                    <div class="widget-body">
+
+                        <form class="login-form mt-lg">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" id="pswd" type="text" placeholder="Password">
+                            </div>
+                            <div class="clearfix">
+                                <div class="btn-toolbar pull-xs-right m-t-1">
+                                    <a class="btn btn-inverse btn-sm" [routerLink]="['/app', 'dashboard'] ">Login</a>
+                                </div>
+                            </div>
+                            <div class="row m-t-1">
+                                <div class="col-md-12 pull-md-12">
+                                    <a class="mr-n-lg" href="#">Trouble with account?</a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
-                    </div>
-                </div>
-                <a class="btn rounded-btn" [routerLink]="['dashboard', 'home']"> Log in </a>
-            </form>
+                </section>
+            </div>
         </div>
-    </div>
+    </main>
+    <footer class="page-footer">
+        2017 &copy; Infinite Clinical Trial Management Systems.
+    </footer>
 </div>

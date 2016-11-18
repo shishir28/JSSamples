@@ -5,7 +5,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { routes } from './app.routes';
 import { LoginModule } from './components/login/login.module';
 import { DashboardModule } from './components/dashboard/dashboard.module';
-import { SharedModule } from './components/shared/shared.module';
+//import { SharedModule } from './components/shared/shared.module';
 import { AppComponent } from './components/app.component';
 
 @NgModule({
@@ -15,7 +15,7 @@ import { AppComponent } from './components/app.component';
         RouterModule.forRoot(routes),
         LoginModule,
         DashboardModule,
-        SharedModule.forRoot()
+       // SharedModule.forRoot()
     ],
     bootstrap: [AppComponent]
 })

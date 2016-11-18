@@ -1,8 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'app',
-    template: require('./app.component.html')
+    encapsulation: ViewEncapsulation.None,
+    //styleUrls: [
+    //    '../scss/application.scss'
+    //],
+    //styles: [require('../scss/application.scss')],
+   // styleUrls: ['../scss/application.scss'],
+    template: require('./app.component.html'),
+
 })
 export class AppComponent {
 }

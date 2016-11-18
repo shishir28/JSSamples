@@ -8,7 +8,7 @@ import { BSComponentModule } from './bs-component/bsComponent.module';
 
 import { DashboardComponent } from './dashboard.component';
 
-import { SidebarComponent } from '../shared/index';
+//import { SidebarComponent } from '../shared/index';
 
 @NgModule({
     imports: [
@@ -18,8 +18,10 @@ import { SidebarComponent } from '../shared/index';
     	BSComponentModule,
         BlankPageModule,
     ],
-    declarations: [DashboardComponent, SidebarComponent],
-    exports: [DashboardComponent, SidebarComponent]
+    declarations: [DashboardComponent],
+    exports: [DashboardComponent]
+    //declarations: [DashboardComponent, SidebarComponent],
+    //exports: [DashboardComponent, SidebarComponent]
 })
 
 export class DashboardModule { }
