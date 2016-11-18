@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-	moduleId: module.id,
 	selector: 'sidebar-cmp',
-	templateUrl: 'sidebar.html'
+    template: require('./sidebar.html')
 })
 
 export class SidebarComponent {

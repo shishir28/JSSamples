@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { BSComponentComponent } from './bsComponent.component';
+import { BSComponentComponent } from './bs-Component.component';
 
 @NgModule({
     imports: [FormsModule],

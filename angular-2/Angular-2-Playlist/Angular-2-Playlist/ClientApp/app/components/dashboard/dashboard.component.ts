@@ -5,9 +5,8 @@ import { Component } from '@angular/core';
 */
 
 @Component({
-	moduleId: module.id,
 	selector: 'dashboard-cmp',
-	templateUrl: 'dashboard.component.html'
+    template: require('./dashboard.component.html')
 })
 
 export class DashboardComponent { }

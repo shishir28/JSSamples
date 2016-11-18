@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { BlankPageComponent } from './blankPage.component';
+import { BlankPageComponent } from './blank-page.component';
 
 @NgModule({
     imports: [],
